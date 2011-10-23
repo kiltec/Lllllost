@@ -2,7 +2,7 @@
 	var _gridMaxX = 20;
 	var _gridMaxY = 7;
 	var _amountOfLs = 3;
-	var _maxTime = 30;
+	var _maxTime = 20;
 	var _locationsOfL = new Array();
 	var _foundLPositions = new Array();
 	var _amountOfFoundLs = 0;
@@ -126,7 +126,7 @@
 	}
 
 	function _lostGame() {
-		alert('You lose and thus you suck!');
+		alert("You lose and thus you suck!\nAnother hint: Maybe your browser can help you?");
 		_restartGame();
 	}
 
