@@ -1,8 +1,9 @@
 (function(lllll, $, undefined) {
 	var _gridMaxX = 20;
 	var _gridMaxY = 7;
-	var _locationsOfL = new Array();
 	var _amountOfLs = 3;
+	var _maxTime = 30;
+	var _locationsOfL = new Array();
 	var _foundLPositions = new Array();
 	var _amountOfFoundLs = 0;
 
@@ -50,7 +51,13 @@
 	}
 
 	function _startCountDown() {
-		$('#countdown').countdown({until: +30, compact: true, format: 'S', description: '', onExpiry: _lostGame});
+		$('#countdown').countdown({
+			until: +_maxTime,
+			compact: true,
+			format: 'S',
+			description: '',
+			onExpiry: _lostGame
+		});
 	}
 
 	function _stopCountDown() {
@@ -115,10 +122,18 @@
 	function _wonGame() {
 		_stopCountDown();
 		alert('Congratulations, you win!');
+		_restartGame();
 	}
 
 	function _lostGame() {
-		alert('You lost and thus you suck!');
+		alert('You lose and thus you suck!');
+		_restartGame();
+	}
+
+	function _restartGame() {
+		$('#lllllost').hide();
+		$('#grid').remove();
+		$('#countdown').countdown('destroy');
 	}
 
 	function _setScore() {
