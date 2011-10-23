@@ -9,11 +9,23 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div id="lllllost"></div>
+		<h1>Lllllost!</h1>
+		<div id="description">
+			Oh noes!<br />
+			I have lost all my "L"'s!<br />
+			Quick, help me to find all of them!
+		</div>
+		<button id="start">Start Game!</button>
+		<div id="lllllost">
+			<p>Click on every "L" you can find!</p>
+			<div id="score">
+				You still have to find <span id="amount_of_found_Ls"></span> Ls.
+			</div>
+		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 		<script src="lllllost.js"></script>
 		<script>
-			$(document).ready(lllll.run());
+			$(document).ready(lllll.init());
 		</script>
 	</body>
 </html>

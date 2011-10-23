@@ -3,25 +3,49 @@
 	var _gridMaxY = 10;
 	var _locationsOfL = new Array();
 	var _amountOfLs = 3;
+	var _foundLPositions = new Array();
+	var _amountOfFoundLs = 0;
 
-	lllll.run = function () {
-		_initLocationsOfL();
-		_drawGrid(_gridMaxX, _gridMaxY);
+	lllll.init = function () {
+		$('#start').click(lllll.start);
 	};
+
+	lllll.start = function () {
+		_initLocationsOfL();
+		_setScore();
+		_drawGrid(_gridMaxX, _gridMaxY);
+		_showGame();
+	};
+
 	function _drawGrid(maxX, maxY) {
-		var gridId;
+		var gridRowId;
+		var tileId;
 
 		$('#lllllost').append('<div id="grid">');
 		for( var y = 0; y <= maxY; y++) {
-			$('#grid').append('<div class="grid_row">');
+			gridRowId = 'grid_row_' + y;
+			$('#grid').append('<div id="' + gridRowId + '" class="grid_row"  ></div>');
 
 			for( var x = 0; x <= maxX; x++) {
-				gridId = 'pos_' + x + '_' + y;
-				$('#grid').append('<span id="' + gridId + '" class="grid_tile">' + _getTileContent(x, y) + '</span>');
+				tileId = _getTileId(x, y)
+				$('#' + gridRowId).append('<span id="' + tileId + '" class="grid_tile">' + _getTileContent(x, y) + '</span>');
+				if(_isLocationOfL(x, y)) {
+					var pos = {};
+					pos.x = x;
+					pos.y = y
+					$('#' + tileId).click(pos, _foundL);
+				}
 			}
-			$('#grid').append('</div>');
 		}
 		$('#lllllost').append('</div>');
+	}
+
+	function _getTileId(x, y) {
+		return 'pos_' + x + '_' + y;
+	}
+
+	function _showGame() {
+		$('#lllllost').fadeIn();
 	}
 
 	function _getTileContent (x, y) {
@@ -49,8 +73,38 @@
 			remainingLs--;
 		}
 	}
+
 	function _isLocationOfL(x, y) {
 		return _locationsOfL[y] && _locationsOfL[y][x];
+	}
+
+	function _foundL(event) {
+		var x = event.data.x;
+		var y = event.data.y;
+		_setLFoundAt(x, y);
+		_setScore();
+		if(_hasWon()) {
+			alert('Wow, you won!');
+		}
+	}
+
+	function _setLFoundAt(x, y) {
+		if(!_foundLPositions[y]) {
+			_foundLPositions[y] = new Array();
+		}
+		if(!_foundLPositions[y][x]) {
+			_foundLPositions[y][x] = true;
+			$('#' + _getTileId(x, y)).toggleClass('found');
+			_amountOfFoundLs++;
+		}
+	}
+
+	function _hasWon() {
+		return _amountOfFoundLs == _amountOfLs;
+	}
+
+	function _setScore() {
+		$('#amount_of_found_Ls').html(_amountOfLs - _amountOfFoundLs);
 	}
 
 	function _randomFromTo(from, to){
