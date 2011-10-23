@@ -133,6 +133,9 @@
 	function _restartGame() {
 		$('#lllllost').hide();
 		$('#grid').remove();
+		_amountOfFoundLs = 0;
+		_foundLPositions = new Array();
+		_locationsOfL = new Array();
 		$('#countdown').countdown('destroy');
 	}
 
