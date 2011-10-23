@@ -1,6 +1,6 @@
 (function(lllll, $, undefined) {
-	var _gridMaxX = 10;
-	var _gridMaxY = 10;
+	var _gridMaxX = 20;
+	var _gridMaxY = 7;
 	var _locationsOfL = new Array();
 	var _amountOfLs = 3;
 	var _foundLPositions = new Array();
@@ -46,6 +46,15 @@
 
 	function _showGame() {
 		$('#lllllost').fadeIn();
+		_startCountDown();
+	}
+
+	function _startCountDown() {
+		$('#countdown').countdown({until: +30, compact: true, format: 'S', description: '', onExpiry: _lostGame});
+	}
+
+	function _stopCountDown() {
+		$('#countdown').countdown('pause');
 	}
 
 	function _getTileContent (x, y) {
@@ -84,7 +93,7 @@
 		_setLFoundAt(x, y);
 		_setScore();
 		if(_hasWon()) {
-			alert('Wow, you won!');
+			_wonGame();
 		}
 	}
 
@@ -101,6 +110,15 @@
 
 	function _hasWon() {
 		return _amountOfFoundLs == _amountOfLs;
+	}
+
+	function _wonGame() {
+		_stopCountDown();
+		alert('Congratulations, you win!');
+	}
+
+	function _lostGame() {
+		alert('You lost and thus you suck!');
 	}
 
 	function _setScore() {
